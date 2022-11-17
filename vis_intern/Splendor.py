@@ -368,6 +368,13 @@ def one_game_numba_2(p0, list_other, per0, per1, per2, per3, per4, per5, per6, p
     return winner
 
 
+def progress_bar(progress, total):
+    bar_long = 100
+    percent = int(bar_long * (progress/float(total)))
+    bar = '█'*percent + '-'*(bar_long - percent)
+    print(f"\r|{bar}| {percent: .2f}% | {progress}/{total}", end = "\r")
+
+
 #@njit()
 def get_func(player_state, id, per0, per1, per2, per3, per4, per5, per6, per7, per8, per9, per10, per11):
     if id == 0: return test2_An_270922(player_state, per0)
@@ -386,10 +393,13 @@ def get_func(player_state, id, per0, per1, per2, per3, per4, per5, per6, per7, p
 def n_game_numba_2(p0, num_game, per0, per1, per2, per3, per4, per5, per6, per7, per8, per9, per10, per11, print_mode):
     win = 0
     for _n in range(num_game):
-        list_other = np.append(np.random.choice(np.arange(12), 3), -1)
+        if print_mode == False and num_game > 1:
+            progress_bar(_n, num_game)
+        list_other = np.append(np.random.choice(np.arange(12), 3, replace = False), -1)
         np.random.shuffle(list_other)
         winner  = one_game_numba_2(p0, list_other, per0, per1, per2, per3, per4, per5, per6, per7, per8, per9, per10, per11, print_mode)
         win += winner
+    print()
     return win
 
 def intern_main(p0, n_game, print_mode = False):

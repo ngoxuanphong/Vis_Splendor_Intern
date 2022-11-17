@@ -1,53 +1,38 @@
 ## Installation
 
-### **Install vis_game library**
+### **Install vis_intern library**
 
 To install the base Gym library, use `pip install gym`.
 
-To upgrade vis_game library, use `pip install --upgrade vis_game`.
+To upgrade vis_intern library, use `pip install --upgrade vis_intern`.
 
 ### **Clone github**
 
-`git clone http://ngoxuanphong/vis_game.git`
+`git clone http://ngoxuanphong/vis_intern.git`
 
-## API
+## P_state
+*   [:6] là **các nguyên liệu đang có trên bàn**
+*   [6: 18] **thông tin của người chơi**, gồm có  6 nguyên liệu đang có, 5 nguyên liệu mặc định và điểm
+*   [18:102]:   **12 thẻ bình thường trên bàn**, mỗi thẻ có 7 state gồm: [điểm, loại thẻ, 5 nguyên liệu mua]
+*   [102: 127]:   **5 thẻ Noble trên bàn**, mỗi thẻ có 5 state gồm: [5 loại nguyên liệu cần]
+*   [127:148]:   **3 thẻ úp trên tay**, mỗi thẻ có 7 state gồm: [điểm, loại thẻ, 5 nguyên liệu mua]
+*   [148: 153]:  **5 nguyên liệu đã lấy** trong phase lấy nguyên liệu
+*   [153:156]: **điểm của 3 người chơi còn lại**
+*   [156:159]: **Có thể úp được thẻ ẩn không**, 1 là có, 2 là không. Gồm có 3 thẻ ẩn của 3 loại
+*   [159]: **Số thẻ có thể úp trên bàn**
 
-**GAME:** `TLMN`, `TLMN_V2`, `Splendor`, `Splendor_v2`, `Catan`, `Catan_v2`, `Sushigo`, `MachiKoro`, `Sheriff`, `Century`
+## Action
+* [0]   :Là **action bỏ lượt**
+* [1:13] **lấy 12 thẻ trên bàn**
+* [13:16] Là **mở 3 thẻ đang úp**
+* [16:28] Úp **12 thẻ trên bàn**
+* [28:31] Úp **3 thẻ ẩn**
+* [31:36] Lấy **5 nguyên liêu**
+* [36:42] Trả **6 nguyên liệu**
 
-Creating environment instances and interacting with them is very simple
 
-- here's an example using the "TLMN" environment:
+**intern_main('Tên hàm người chơi', số trận, print mode)**
 
-```python
-import numpy as np
-from vis_game.base.TLMN.env import getValidActions, getActionSize, getReward, getStateSize, numba_main_2, normal_main_2, normal_main
-from numba import njit
-@njit()
-def test(p_state, temp_file, per_file):
-    arr_action = getValidActions(p_state)
-    arr_action = np.where(arr_action == 1)[0]
-    act_idx = np.random.randint(0, len(arr_action))
-    return arr_action[act_idx], temp_file, per_file
+    - *số trận*: là số trận muốn test
 
-numba_main_2(test, [0], 1000)
-```
-
-`getValidActions`: Return possible actions
-
-`getActionSize`: Return amount action in game
-
-`getStateSize`: Return amount of np array observation state of agent
-
-`getReward`: Return 0 if game not ended, 1 if agent win, -1 if agen lose
-
-**Runcode**
-
-'numba_main_2(function_of_agent, agent_data, total_of_match)'.
-  - `function_of_agent`: support numba library(function)
-  - `agent_data`: support numba library(list, numba List, np array...)
-  - `total_of_match`: total match run game(int)
-
-'normal_main_2(function_of_agent, agent_data, total_of_match)'.
-  - `function_of_agent`: function
-  - `agent_data`: data of agent
-  - `total_of_match`: total match run game(int)
+    - print mode: True là có in, False là không

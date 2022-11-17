@@ -2,7 +2,6 @@ from vis_intern.system.mainFunc import dict_game_for_player, load_data_per2
 game_name_ = 'Splendor_v2'
 import random
 import numpy as np
-# from setup import game_name,time_run_game
 from numba import jit, njit, prange
 import warnings
 from numba.typed import List
@@ -45,14 +44,16 @@ def getValidActions(player_state_origin:np.int64):
         if b_stocks[s_] < 3: # Có thể lấy double
             if (s_+ 31) in temp_:
                 temp_.remove(s_ + 31) #Xóa action đã lấy ở file temp nếu nguyên liệu không trên 4
-        list_action_return[np.array(temp_)] = 1
+        if len(temp_) > 0:
+            list_action_return[np.array(temp_)] = 1
         check_action_0 = True
     elif s_taken == 2:
         lst_s_ = np.where(taken==1)[0]
         for s_ in lst_s_:
             if (s_+31) in temp_:
                 temp_.remove(s_+31)
-        list_action_return[np.array(temp_)] = 1
+        if len(temp_) > 0:
+            list_action_return[np.array(temp_)] = 1
         check_action_0 = True
     elif s_taken == 0:
         if len(temp_) > 0:

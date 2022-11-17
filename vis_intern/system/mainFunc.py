@@ -44,7 +44,7 @@ dict_game_for_player = {
     'Catan_v2': ['An_130922', 'Dat_270922', 'Hieu_130922', 'Hieu_270922', 'Khanh_200922', 'NhatAnh_130922', 'NhatAnh_200922', 'NhatAnh_270922', 'Phong_130922', 'Phong_200922', 'Phong_270922']
 }
 
-from vis_game import system
+from vis_intern import system
 from numba.typed import List
 import os
 import numpy as np
@@ -54,25 +54,25 @@ def load_data_per2(list_all_players, game_name_):
     for name in list_all_players:
         # path_data = f'system/Agent/{name}/Data/{game_name_}_79200/'
         if 'Dat' in name:
-            with resources.open_binary(f'vis_game.system.Agent.{name}.Data.{game_name_}_79200', f'Best.npz') as fp:
+            with resources.open_binary(f'vis_intern.system.Agent.{name}.Data.{game_name_}_79200', f'Best.npz') as fp:
                 data_in_file = fp.read()
         elif 'Phong' in name:
-            with resources.open_binary(f'vis_game.system.Agent.{name}.Data.{game_name_}_79200', f'p_model_manh_nhat.npy') as fp:
+            with resources.open_binary(f'vis_intern.system.Agent.{name}.Data.{game_name_}_79200', f'p_model_manh_nhat.npy') as fp:
                 data_in_file = fp.read()
         elif 'Khanh' in name:
-            with resources.open_binary(f'vis_game.system.Agent.{name}.Data.{game_name_}_79200', f'CK_Win.npy') as fp:
+            with resources.open_binary(f'vis_intern.system.Agent.{name}.Data.{game_name_}_79200', f'CK_Win.npy') as fp:
                 data_in_file = fp.read()
         elif 'Hieu_130922' in name:
-            with resources.open_binary(f'vis_game.system.Agent.{name}.Data.{game_name_}_79200', f'CK_Matran.npy') as fp:
+            with resources.open_binary(f'vis_intern.system.Agent.{name}.Data.{game_name_}_79200', f'CK_Matran.npy') as fp:
                 data_in_file = fp.read()
         elif 'Hieu_270922' in name:
-            with resources.open_binary(f'vis_game.system.Agent.{name}.Data.{game_name_}_79200', f'best_matrix.npy') as fp:
+            with resources.open_binary(f'vis_intern.system.Agent.{name}.Data.{game_name_}_79200', f'best_matrix.npy') as fp:
                 data_in_file = fp.read()
         elif 'NhatAnh' in name:
-            with resources.open_binary(f'vis_game.system.Agent.{name}.Data.{game_name_}_79200', f'best.npy') as fp:
+            with resources.open_binary(f'vis_intern.system.Agent.{name}.Data.{game_name_}_79200', f'best.npy') as fp:
                 data_in_file = fp.read()
         elif 'An' in name:
-            with resources.open_binary(f'vis_game.system.Agent.{name}.Data.{game_name_}_79200', f'Ahih1st.npy') as fp:
+            with resources.open_binary(f'vis_intern.system.Agent.{name}.Data.{game_name_}_79200', f'Ahih1st.npy') as fp:
                 data_in_file = fp.read()
         data_in_file = np.load(io.BytesIO(data_in_file), allow_pickle=True)
 
