@@ -12,7 +12,7 @@ warnings.simplefilter('ignore', category=NumbaExperimentalFeatureWarning)
 warnings.simplefilter('ignore', category=NumbaWarning)
 
 ##########################################################
-# @njit()
+@njit()
 def getValidActions(player_state_origin:np.int64):
     list_action_return = np.zeros(42)
     p_state = player_state_origin.copy()
@@ -93,19 +93,19 @@ def getValidActions(player_state_origin:np.int64):
 
     return list_action_return
 
-#@njit()
+@njit()
 def getActionSize():
     return 42
 
-#@njit()
+@njit()
 def getAgentSize():
     return 4
 
-#@njit()
+@njit()
 def getStateSize():
     return 161
 
-#@njit()
+@njit()
 def data_to_layer_NhatAnh_130922(state,data0, data1):
     state = np.dot(state,data0)
     state *= state > 0
@@ -113,7 +113,7 @@ def data_to_layer_NhatAnh_130922(state,data0, data1):
     layer1 = data1.flatten() * active
     return layer1
 
-#@njit()
+@njit()
 def test2_NhatAnh_130922(state,file_per_2):
     state = state[:-1]
     layer = np.zeros(getActionSize())
@@ -131,7 +131,7 @@ def test2_NhatAnh_130922(state,file_per_2):
 
 ###########################################################
 
-#@njit()
+@njit()
 def basic_act_NhatAnh_200922(state,base):
     actions = getValidActions(state)
     actions = np.where(actions == 1)[0]
@@ -142,7 +142,7 @@ def basic_act_NhatAnh_200922(state,base):
     action = actions[ind]
     return action
 
-#@njit()
+@njit()
 def test2_NhatAnh_200922(state,file_per_2):
     state = state[:-1]
     action = basic_act_NhatAnh_200922(state,file_per_2)
@@ -150,7 +150,7 @@ def test2_NhatAnh_200922(state,file_per_2):
 
 ###########################################################
 
-#@njit()
+@njit()
 def advance_act_NhatAnh_270922(state,data):
     for id in range(len(data[1])):
         x = data[1][id].reshape(len(data[1][id]), 1)
@@ -163,7 +163,7 @@ def advance_act_NhatAnh_270922(state,data):
             return int(action)
     return np.random.choice(np.where(getValidActions(state) == 1)[0])
 
-#@njit()
+@njit()
 def test2_NhatAnh_270922(state, file_per_2):
     state = state[:-1]
     action = advance_act_NhatAnh_270922(state,file_per_2)
@@ -172,16 +172,16 @@ def test2_NhatAnh_270922(state, file_per_2):
 #################################################################
 #################################################################
 #################################################################
-#@njit()
+@njit()
 def _sigmoid_khanh_130922_(x):
     sig = 1 / (1 + np.exp(-x))
     return sig
 
-#@njit()
+@njit()
 def _silu_khanh_130922_(x, theda = 1.0):
     return x * _sigmoid_khanh_130922_(theda *x)
 
-#@njit()
+@njit()
 def neural_network_khanh_130922(play_state, file_temp0, file_temp1, file_temp2):
     if 55 < len(play_state) < 70 or len(play_state) > 250 : # TLMN , TLMN_v2 , CENTURY
         matran1 = np.dot(play_state,file_temp0)
@@ -208,7 +208,7 @@ def neural_network_khanh_130922(play_state, file_temp0, file_temp1, file_temp2):
         matran2 = np.dot(matran1, file_temp1)
         return matran2
 
-#@njit()
+@njit()
 def neural_network_khanh_130922_2(play_state, file_temp0, file_temp1):
     if 170 < len(play_state) < 250  : #SHERIFF 
         matran1 = np.dot(play_state, file_temp0)
@@ -221,7 +221,7 @@ def neural_network_khanh_130922_2(play_state, file_temp0, file_temp1):
         matran2 = np.dot(matran1, file_temp1)
         return matran2
 
-#@njit()
+@njit()
 def test2_Khanh_130922(play_state, file_per_2):
     play_state = play_state[:-1]
     a = getValidActions(play_state)
@@ -241,11 +241,11 @@ def test2_Khanh_130922(play_state, file_per_2):
 
 ################################################################
 
-#@njit()
+@njit()
 def relu6_khanh_200922(x):
     return np.minimum(np.maximum(0, x),6)
 
-#@njit()
+@njit()
 def neural_network_khanh_200922(play_state, file_temp0, file_temp1, file_temp2):
     if 55 < len(play_state) < 70 or len(play_state) > 250 : # TLMN , TLMN_v2 , CENTURY
         matran1 = np.dot(play_state,file_temp0)
@@ -272,7 +272,7 @@ def neural_network_khanh_200922(play_state, file_temp0, file_temp1, file_temp2):
         matran2 = np.dot(matran1, file_temp1)
         return matran2
     
-#@njit()
+@njit()
 def neural_network_khanh_200922_2(play_state, file_temp0, file_temp1):    
     if 170 < len(play_state) < 250  : #SHERIFF 
         matran1 = np.dot(play_state, file_temp0)
@@ -285,7 +285,7 @@ def neural_network_khanh_200922_2(play_state, file_temp0, file_temp1):
         matran2 = np.dot(matran1, file_temp1)
         return matran2
 
-#@njit()
+@njit()
 def test2_Khanh_200922(play_state,file_per_2):
     play_state = play_state[:-1]
     a = getValidActions(play_state)
@@ -304,7 +304,7 @@ def test2_Khanh_200922(play_state,file_per_2):
 
 #############################################################
 
-#@njit()
+@njit()
 def neural_network_khanh_270922(play_state, file_temp0, file_temp1, file_temp2):
     if 55 < len(play_state) < 70 or len(play_state) > 250 : # TLMN , TLMN_v2 , CENTURY
         matran1 = np.dot(play_state,file_temp0)
@@ -331,7 +331,7 @@ def neural_network_khanh_270922(play_state, file_temp0, file_temp1, file_temp2):
         matran2 = np.dot(matran1, file_temp1)
         return matran2
 
-#@njit()
+@njit()
 def neural_network_khanh_270922_2(play_state, file_temp0, file_temp1):
     if 170 < len(play_state) < 250  : #SHERIFF 
         matran1 = np.dot(play_state, file_temp0)
@@ -344,7 +344,7 @@ def neural_network_khanh_270922_2(play_state, file_temp0, file_temp1):
         matran2 = np.dot(matran1, file_temp1)
         return matran2
 
-#@njit()
+@njit()
 def test2_Khanh_270922(play_state,file_per_2):
     play_state = play_state[:-1]
     a = getValidActions(play_state)
@@ -365,49 +365,49 @@ def test2_Khanh_270922(play_state,file_per_2):
 #################################################################
 #################################################################
 #################################################################
-#@njit()
+@njit()
 def Identity_an_130922(x):
     return x
 
-#@njit()
+@njit()
 def BinaryStep_an_130922(x):
     x[x>=0] = 1.0
     x[x<0] = 0.0
     return x
 
-#@njit()
+@njit()
 def Sigmoid_an_130922(x):
     return 1.0 / (1.0 + np.e**(-x))
 
-#@njit()
+@njit()
 def NegativePositiveStep_an_130922(x):
     x[x>=0] = 1.0
     x[x<0] = -1.0
     return x
 
-#@njit()
+@njit()
 def Tanh_an_130922(x):
     return (np.e**(x) - np.e**(-x)) / (np.e**(x) + np.e**(-x))
 
-#@njit()
+@njit()
 def ReLU_an_130922(x):
     return x * (x>0)
 
-#@njit()
+@njit()
 def LeakyReLU_an_130922(x):
     x[x<0] *= 0.01
     return x
 
-#@njit()
+@njit()
 def PReLU_an_130922(x, a=0.5):
     x[x<0] *= 0.5
     return x
 
-#@njit()
+@njit()
 def Gaussian_an_130922(x):
     return np.e**(-x**2)
 
-#@njit()
+@njit()
 def id_function_an_130922(id, res_mat, Identity_an_130922, BinaryStep_an_130922, Sigmoid_an_130922, NegativePositiveStep_an_130922, Tanh_an_130922, ReLU_an_130922, LeakyReLU_an_130922, PReLU_an_130922, Gaussian_an_130922):
     if id == 0: return Identity_an_130922(res_mat)
     elif id == 1: return BinaryStep_an_130922(res_mat)
@@ -419,7 +419,7 @@ def id_function_an_130922(id, res_mat, Identity_an_130922, BinaryStep_an_130922,
     elif id == 7: return PReLU_an_130922(res_mat)
     else: return Gaussian_an_130922(res_mat)
 
-#@njit()
+@njit()
 def neural_network_an_130922(res_mat, data, list_action):
     for i in range(len(data)):
         if i % 2 == 0:
@@ -437,7 +437,7 @@ def neural_network_an_130922(res_mat, data, list_action):
     action_max_idx = np.random.choice(arr_max)
     return list_action[action_max_idx]
 
-#@njit()
+@njit()
 def test2_An_130922(p_state, temp_file,  file_per_2):
     p_state = p_state[:-1]
     list_action = getValidActions(p_state)
@@ -446,46 +446,46 @@ def test2_An_130922(p_state, temp_file,  file_per_2):
     return action, temp_file,  file_per_2
 
 ############################################################
-#@njit()
+@njit()
 def Identity_an_200922(x:np.ndarray):
     return x/np.abs(x).max()
 
-#@njit()
+@njit()
 def BinaryStep_an_200922(x:np.ndarray):
     return np.where(x>=0, 1, 0).astype(np.float64)
 
-#@njit()
+@njit()
 def Sigmoid_an_200922(x:np.ndarray):
     LOG_INF = 709.782712893384
     return 1/(1+np.e**(-np.where(np.abs(x)>LOG_INF, np.sign(x)*LOG_INF, x)))
 
-#@njit()
+@njit()
 def SignStep_an_200922(x:np.ndarray):
     return np.sign(x)
 
-#@njit()
+@njit()
 def Tanh_an_200922(x:np.ndarray):
     LOG_INF = 709.782712893384
     HALF_LOG_INF = 354.891356446692
     x_new = np.where(np.abs(x)>HALF_LOG_INF, np.sign(x)*HALF_LOG_INF, x)
     return (np.e**(2*x_new)-1)/(np.e**(2*x_new)+1)
 
-#@njit()
+@njit()
 def ReLU_an_200922(x:np.ndarray):
     return np.where(x<0, 0, x)/np.max(x)
 
-#@njit()
+@njit()
 def SoftPlus_an_200922(x:np.ndarray):
     LOG_INF = 709.782712893384
     x_ = np.where(np.abs(x)>LOG_INF-1, x, np.log(1+np.e**(x)))
     return x_/np.max(x_)
 
-#@njit()
+@njit()
 def Gaussian_an_200922(x:np.ndarray):
     SQRT_LOG_INF = 18.838560360247595
     return np.e**(-np.where(np.abs(x)>SQRT_LOG_INF, np.sign(x)*SQRT_LOG_INF, x)**2)
 
-#@njit()
+@njit()
 def id_function_an_200922(id, res_mat, Identity_an_200922, BinaryStep_an_200922, Sigmoid_an_200922, SignStep_an_200922, Tanh_an_200922, ReLU_an_200922, SoftPlus_an_200922, Gaussian_an_200922):
     if id == 0: return Identity_an_200922(res_mat)
     elif id == 1: return BinaryStep_an_200922(res_mat)
@@ -496,7 +496,7 @@ def id_function_an_200922(id, res_mat, Identity_an_200922, BinaryStep_an_200922,
     elif id == 6: return SoftPlus_an_200922(res_mat)
     else: return Gaussian_an_200922(res_mat)
 
-#@njit()
+@njit()
 def Ann_neural_network_an_200922(res_mat:np.ndarray, data, list_action):
     for i in range(len(data)//3):
         data3i = data[3*i]
@@ -515,7 +515,7 @@ def Ann_neural_network_an_200922(res_mat:np.ndarray, data, list_action):
     action_max_idx = np.random.choice(arr_max)
     return list_action[action_max_idx]
 
-#@njit()
+@njit()
 def test2_An_200922(p_state, file_per_2):
     p_state = p_state[:-1]
     list_action = getValidActions(p_state)
@@ -542,57 +542,57 @@ def test2_An_200922(p_state, file_per_2):
 
 ####################################################
 
-#@njit()
+@njit()
 def Identity_an_270922(x:np.ndarray):
     return x/np.abs(x).max()
 
-#@njit()
+@njit()
 def BinaryStep_an_270922(x:np.ndarray):
     return np.where(x>=0, 1, 0).astype(np.float64)
 
-#@njit()
+@njit()
 def Sigmoid_an_270922(x:np.ndarray):
     LOG_INF = 709.782712893384
     return 1/(1+np.e**(-np.where(np.abs(x)>LOG_INF, np.sign(x)*LOG_INF, x)))
 
-#@njit()
+@njit()
 def SignStep_an_270922(x:np.ndarray):
     return np.sign(x)
 
-#@njit()
+@njit()
 def Tanh_an_270922(x:np.ndarray):
     HALF_LOG_INF = 354.891356446692
     x_new = np.where(np.abs(x)>HALF_LOG_INF, np.sign(x)*HALF_LOG_INF, x)
     return (np.e**(2*x_new)-1)/(np.e**(2*x_new)+1)
 
-#@njit()
+@njit()
 def ReLU_an_270922(x:np.ndarray):
     return np.where(x<0, 0, x)/np.max(x)
 
-#@njit()
+@njit()
 def LeakyReLU_an_270922(x:np.ndarray):
     x_new = np.where(x<0, 0.01*x, x)
     return x_new/np.abs(x_new).max()
 
-#@njit()
+@njit()
 def PReLU_an_270922(x:np.ndarray):
     x_new = np.where(x<0, 0.5*x, x)
     return x_new/np.abs(x_new).max()
 
-#@njit()
+@njit()
 def SoftPlus_an_270922(x:np.ndarray):
     LOG_INF = 709.782712893384
     x_new = np.where(np.abs(x)>LOG_INF-1e-9, x, np.log(1+np.e**(x)))
     return x_new/np.max(x_new)
 
-#@njit()
+@njit()
 def Gaussian_an_270922(x:np.ndarray):
     SQRT_LOG_INF = 18.838560360247595
     return np.e**(-np.where(np.abs(x)>SQRT_LOG_INF, np.sign(x)*SQRT_LOG_INF, x)**2)
 
 activation_function = [Identity_an_270922, BinaryStep_an_270922, Sigmoid_an_270922, SignStep_an_270922, Tanh_an_270922, ReLU_an_270922, LeakyReLU_an_270922, PReLU_an_270922, SoftPlus_an_270922, Gaussian_an_270922]
 
-#@njit()
+@njit()
 def id_function_an_270922(id, res_mat, Identity_an_270922, BinaryStep_an_270922, Sigmoid_an_270922, SignStep_an_270922, Tanh_an_270922, ReLU_an_270922, LeakyReLU_an_270922, PReLU_an_270922, SoftPlus_an_270922, Gaussian_an_270922):
     if id == 0: return Identity_an_270922(res_mat)
     if id == 1: return BinaryStep_an_270922(res_mat)
@@ -605,7 +605,7 @@ def id_function_an_270922(id, res_mat, Identity_an_270922, BinaryStep_an_270922,
     if id == 8: return SoftPlus_an_270922(res_mat)
     else: return Gaussian_an_270922(res_mat)
 
-#@njit()
+@njit()
 def Ann_neural_network_an_270922(res_mat:np.ndarray, data, list_action):
     for i in range(len(data)//3):
         data3i = data[3*i]
@@ -623,7 +623,7 @@ def Ann_neural_network_an_270922(res_mat:np.ndarray, data, list_action):
     
     return list_action[np.random.choice(arr_max)]
 
-#@njit()
+@njit()
 def test2_An_270922(p_state, file_per_2):
     p_state = p_state[:-1]
     list_action = getValidActions(p_state)
@@ -648,7 +648,7 @@ def test2_An_270922(p_state, file_per_2):
 #################################################################
 #################################################################
 
-#@njit()
+@njit()
 def test2_Dat_130922(state,file_per_2):
     state = state[:-1]
     list_action = getValidActions(state)
@@ -663,7 +663,7 @@ def test2_Dat_130922(state,file_per_2):
 ###############################################################
 ###############################################################
 ###############################################################
-#@njit()
+@njit()
 def neural_network_hieu_130922(state, file_temp0, file_temp1, file_temp2, list_action):
     norm_state = state/np.linalg.norm(state, 1)
     norm_state = np.tanh(norm_state)                    #dạng tanh
@@ -680,7 +680,7 @@ def neural_network_hieu_130922(state, file_temp0, file_temp1, file_temp2, list_a
     action_max = np.argmax(result_val_action)
     return action_max
 
-#@njit()
+@njit()
 def test2_Hieu_130922(state, file_per_2):
     state = state[:-1]
     list_action = getValidActions(state)
@@ -688,7 +688,7 @@ def test2_Hieu_130922(state, file_per_2):
     action = neural_network_hieu_130922(state, file_per_2[0], file_per_2[1], file_per_2[2], list_action)
     return action
 #################################################################
-#@njit()
+@njit()
 def agent_hieu_270922(state,file_temp,file_per):
     actions = getValidActions(state)
     actions = np.where(actions == 1)[0]
@@ -696,20 +696,20 @@ def agent_hieu_270922(state,file_temp,file_per):
     file_per = (len(state),getActionSize())
     return action,file_temp,file_per
 
-#@njit()
+@njit()
 def softmax_hieu_270922(X):
     expo = np.exp(X)
     return expo/np.sum(expo)
 
-#@njit()
+@njit()
 def sigmoid_hieu_270922(X):
     return 1/(1+np.exp(-X))
 
-#@njit()
+@njit()
 def tanh_hieu_270922(X):
     return np.tanh(X)
 
-#@njit()
+@njit()
 def neural_network_hieu_270922(norm_state, file_temp0, file_temp1, file_temp2, list_action):
     norm_state = norm_state/np.linalg.norm(norm_state, 1)
     norm_state = softmax_hieu_270922(norm_state)
@@ -730,7 +730,7 @@ def neural_network_hieu_270922(norm_state, file_temp0, file_temp1, file_temp2, l
     action_max = np.argmax(result_val_action)
     return action_max
 
-#@njit()
+@njit()
 def test2_Hieu_270922(state, file_per_2):
     state = state[:-1]
     list_action = getValidActions(state)
@@ -742,7 +742,7 @@ def test2_Hieu_270922(state, file_per_2):
 ######################################################################
 ######################################################################
 
-#@njit()
+@njit()
 def file_temp_to_action_Phong_130922(state, file_temp):
     a = getValidActions(state)
     a = np.where(a == 1)[0]
@@ -752,7 +752,7 @@ def file_temp_to_action_Phong_130922(state, file_temp):
     action = a[np.argmax(list_val_action)]
     return action
 
-#@njit() 
+@njit() 
 def test2_Phong_130922(state,file_per_2):
     state = state[:-1]
     action = file_temp_to_action_Phong_130922(state, file_per_2)

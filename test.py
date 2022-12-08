@@ -22,6 +22,7 @@ def random_player(p_state):
     return arr_action[act_idx]
 
 print(intern_main(random_player, 100, False))
-
+print(normal_main([random_player, random_player, random_player,random_player], 100)
+)
 # import numpy as np
 # print(np.arange(1, 13))

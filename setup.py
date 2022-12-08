@@ -15,7 +15,7 @@ classifiers = [
  
 setup(
   name='vis_intern',
-  version='0.0.3',
+  version='0.0.5',
   description='a system reinforcement learning game splendor for vis intern',
   # long_description=open(path.join(path.abspath(path.dirname(__file__)), 'README.md'), encoding='utf-8').read(),
   url='',  
